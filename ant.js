@@ -13,6 +13,20 @@ let ant = {
     currentPosition: undefined,
     prevPosition: undefined,
     steps: 0,
+
+    //  Initialize ant positions, ensuring the ant starts near the center of the grid
+    initialize: function(n) {
+        if (n % 2 === 0) {
+            this.startPosition = Math.floor((n*n)/2) + Math.ceil(n/2);
+        } else {
+            this.startPosition = Math.floor((n * n) / 2);
+        }
+        this.currentOrientation = "↑";
+        this.currentPosition = this.startPosition;
+        this.prevPosition = this.startPosition;
+        this.steps = 0;
+    },
+
     move: function() {
         const currentColor = getComputedStyle(document.getElementById(this.currentPosition.toString())).backgroundColor;
         this.currentOrientation = changeOrientation(this.currentOrientation, currentColor);
@@ -44,17 +58,7 @@ async function genGrid() {
         gridCell.style.height = `${100/n}%`;
         gridContainer.appendChild(gridCell);
         }
-
-    //  Initialize ant positions, ensuring the ant starts near the center of the grid
-    if (n % 2 === 0) {
-        ant.startPosition = Math.floor((n*n)/2) + Math.ceil(n/2);
-    } else {
-        ant.startPosition = Math.floor((n * n) / 2);
-    }
-    ant.currentOrientation = "↑";
-    ant.currentPosition = ant.startPosition;
-    ant.prevPosition = ant.startPosition;
-    ant.steps = 0;
+    ant.initialize(n);
 
     //  Main loop
     while (ant.currentPosition > 0 && ant.currentPosition < n*n) {
