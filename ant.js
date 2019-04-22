@@ -19,7 +19,7 @@ let ant = {
         } else {
             this.startPosition = Math.floor((n * n) / 2);
         }
-        this.currentOrientation = "←";
+        this.currentOrientation = "↑";
         this.currentPosition = this.startPosition;
         this.prevPosition = this.startPosition;
         this.steps = 0;
@@ -27,8 +27,9 @@ let ant = {
 
     move: function() {
         const currentColor = getComputedStyle(document.getElementById(this.currentPosition.toString())).backgroundColor;
-        this.currentOrientation = changeOrientation(this.currentOrientation, currentColor);
+        // this.currentOrientation = changeOrientation(this.currentOrientation, currentColor);
         setArrow(this.currentPosition, this.prevPosition, this.currentOrientation, currentColor);
+        this.currentOrientation = changeOrientation(this.currentOrientation, currentColor);
         this.prevPosition = this.currentPosition;
         switchColor(this.currentPosition, currentColor);
         this.currentPosition = changePosition(this.currentPosition, this.currentOrientation);
@@ -79,16 +80,14 @@ function switchColor(currentPosition, currentColor) {
 
 //  Sets the arrow icon indicating direction of next move
 function setArrow(currentPosition, prevPosition, currentOrientation, currentColor) {
-    currentPosition = currentPosition.toString();
-    prevPosition = prevPosition.toString();
-    document.getElementById(currentPosition).innerText = currentOrientation;
+    document.getElementById(currentPosition.toString()).innerText = currentOrientation;
     if (currentColor === white) {
         document.getElementById(currentPosition).style.color = white;
     } else {
         document.getElementById(currentPosition).style.color = black;
     }
     if (ant.steps > 0) {
-        document.getElementById(prevPosition).innerText = "";
+        document.getElementById(prevPosition.toString()).innerText = "";
     }
 }
 
