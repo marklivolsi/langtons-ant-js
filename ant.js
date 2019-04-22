@@ -1,6 +1,4 @@
-// const orientations = ["UP", "RIGHT", "DOWN", "LEFT"];
 const orientations = ["↑", "→", "↓", "←"];
-
 const white = "rgb(255, 255, 255)";
 const black = "rgb(0, 0, 0)";
 let rows;
@@ -21,7 +19,7 @@ let ant = {
         } else {
             this.startPosition = Math.floor((n * n) / 2);
         }
-        this.currentOrientation = "↑";
+        this.currentOrientation = "←";
         this.currentPosition = this.startPosition;
         this.prevPosition = this.startPosition;
         this.steps = 0;
@@ -30,9 +28,9 @@ let ant = {
     move: function() {
         const currentColor = getComputedStyle(document.getElementById(this.currentPosition.toString())).backgroundColor;
         this.currentOrientation = changeOrientation(this.currentOrientation, currentColor);
-        setArrow(this.currentPosition.toString(), this.prevPosition.toString(), this.currentOrientation, currentColor);
+        setArrow(this.currentPosition, this.prevPosition, this.currentOrientation, currentColor);
         this.prevPosition = this.currentPosition;
-        switchColor(this.currentPosition.toString(), currentColor);
+        switchColor(this.currentPosition, currentColor);
         this.currentPosition = changePosition(this.currentPosition, this.currentOrientation);
         this.steps++;
     }
@@ -70,24 +68,27 @@ async function genGrid() {
 }
 
 //  Switch the background color of a cell from white > black and vice versa
-function switchColor(cellId, currentColor) {
+function switchColor(currentPosition, currentColor) {
+    currentPosition = currentPosition.toString();
     if (currentColor === white) {
-        document.getElementById(cellId).style.backgroundColor = black;
+        document.getElementById(currentPosition).style.backgroundColor = black;
     } else {
-        document.getElementById(cellId).style.backgroundColor = white;
+        document.getElementById(currentPosition).style.backgroundColor = white;
     }
 }
 
 //  Sets the arrow icon indicating direction of next move
-function setArrow(cellId, prevCell, currentOrientation, currentColor) {
-    document.getElementById(cellId).innerText = currentOrientation;
+function setArrow(currentPosition, prevPosition, currentOrientation, currentColor) {
+    currentPosition = currentPosition.toString();
+    prevPosition = prevPosition.toString();
+    document.getElementById(currentPosition).innerText = currentOrientation;
     if (currentColor === white) {
-        document.getElementById(cellId).style.color = white;
+        document.getElementById(currentPosition).style.color = white;
     } else {
-        document.getElementById(cellId).style.color = black;
+        document.getElementById(currentPosition).style.color = black;
     }
     if (ant.steps > 0) {
-        document.getElementById(prevCell).innerText = "";
+        document.getElementById(prevPosition).innerText = "";
     }
 }
 
