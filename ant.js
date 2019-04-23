@@ -4,9 +4,9 @@ const black = "rgb(0, 0, 0)";
 let rows;
 let delayTime;
 let cancelTime;
-let stop;
+let pause;
 
-// TODO: Allow user to specify starting orientation, delay interval,
+// TODO: Allow user to specify starting orientation
 
 let ant = {
     currentOrientation: undefined,
@@ -57,26 +57,42 @@ function genGrid(n) {
     }
 }
 
-//  Main loop
-async function run() {
+function setupSim() {
     rows = parseInt(document.getElementById("grid-size").value);
     genGrid(rows);
     delayTime = parseInt(document.getElementById("delay-time").value);  // must handle exceptions
     ant.initialize(rows);
-    if (cancelTime && !stop) await sleep(cancelTime);  // run out the remaining sleep time when re-generating the simulation
-    stop = false;
-    while (ant.currentPosition > 0 && ant.currentPosition < rows*rows && !stop) {
-        console.log(stop);
+}
+
+//  Main loop
+async function run(newSim=true) {
+    if (newSim) setupSim();
+    if (cancelTime && !pause) await sleep(cancelTime);  // run out the remaining sleep time when re-generating the simulation
+    if (pause) {
+        pause = false;
+        setPauseBtn();
+    }
+    while (ant.currentPosition > 0 && ant.currentPosition < rows*rows && !pause) {
         ant.move();
-        const currentColor = getComputedStyle(document.getElementById(ant.currentPosition.toString())).backgroundColor;
-        // console.log(`Taking step #${ant.steps}. Current color: ${currentColor}, orientation: ${ant.currentOrientation}, position: ${ant.currentPosition}`);
         await sleep(delayTime);
         cancelTime = new Date().getTime();
     }
 }
 
-function stopSim() {
-    stop = true;
+function pauseSim() {
+    pause = true;
+    document.getElementById("pause-btn").value = "Resume simulation";
+    document.getElementById("pause-btn").onclick = resumeSim;
+}
+
+function resumeSim() {
+    setPauseBtn();
+    run(false);
+}
+
+function setPauseBtn() {
+    document.getElementById("pause-btn").value = "Pause simulation";
+    document.getElementById("pause-btn").onclick = pauseSim;
 }
 
 //  Switch the background color of a cell from white > black and vice versa

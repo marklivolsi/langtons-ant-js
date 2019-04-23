@@ -19,7 +19,7 @@ h1 {
 }
 
 .btns {
-    border: 1px solid green;
+    /*border: 1px solid green;*/
     width: 100%;
     text-align: center;
     padding: 5px;
