@@ -19,6 +19,7 @@ h1 {
 }
 
 .btns {
+    border: 1px solid green;
     width: 100%;
     text-align: center;
     padding: 5px;
@@ -26,6 +27,15 @@ h1 {
     justify-content: center;
     flex-wrap: wrap;
 }
+
+
+/*label {*/
+    /*width: 50%;*/
+/*}*/
+
+/*input[type="text"] {*/
+    /*width: 50%;*/
+/*}*/
 
 .grid-container {
     width: 600px;

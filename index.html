@@ -13,8 +13,12 @@
     <form>
         <label for="grid-size">Grid size:</label>
         <input type="text" id="grid-size" placeholder="Enter grid size (i.e. 20)" />
+        <br>
+        <label for="delay-time">Delay time (ms):</label>
+        <input type="text" id="delay-time" placeholder="Enter delay time in ms (i.e. 1000 = 1 sec)" value="1000">
     </form>
     <div class="run-btn"><input type="button" onclick="run()" value="Run simulation"></div>
+    <div class="stop-btn"><input type="button" onclick="stopSim()" value="Stop simulation"></div>
     <!--<input type="button" onclick="run()" value="Run simulation">-->
 </div>
 

@@ -2,7 +2,9 @@ const orientations = ["↑", "→", "↓", "←"];
 const white = "rgb(255, 255, 255)";
 const black = "rgb(0, 0, 0)";
 let rows;
+let delayTime;
 let cancelTime;
+let stop;
 
 // TODO: Allow user to specify starting orientation, delay interval,
 
@@ -59,15 +61,22 @@ function genGrid(n) {
 async function run() {
     rows = parseInt(document.getElementById("grid-size").value);
     genGrid(rows);
+    delayTime = parseInt(document.getElementById("delay-time").value);  // must handle exceptions
     ant.initialize(rows);
-    if (cancelTime) await sleep(cancelTime);  // run out the remaining sleep time when re-generating the simulation
-    while (ant.currentPosition > 0 && ant.currentPosition < rows*rows) {
+    if (cancelTime && !stop) await sleep(cancelTime);  // run out the remaining sleep time when re-generating the simulation
+    stop = false;
+    while (ant.currentPosition > 0 && ant.currentPosition < rows*rows && !stop) {
+        console.log(stop);
         ant.move();
         const currentColor = getComputedStyle(document.getElementById(ant.currentPosition.toString())).backgroundColor;
-        console.log(`Taking step #${ant.steps}. Current color: ${currentColor}, orientation: ${ant.currentOrientation}, position: ${ant.currentPosition}`);
-        await sleep(1000);
+        // console.log(`Taking step #${ant.steps}. Current color: ${currentColor}, orientation: ${ant.currentOrientation}, position: ${ant.currentPosition}`);
+        await sleep(delayTime);
         cancelTime = new Date().getTime();
     }
+}
+
+function stopSim() {
+    stop = true;
 }
 
 //  Switch the background color of a cell from white > black and vice versa
