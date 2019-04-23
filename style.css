@@ -13,12 +13,18 @@ h1 {
     text-align: center;
 }
 
+.run-btn {
+    width: 100%;
+    padding: 5px;
+}
+
 .btns {
     width: 100%;
     text-align: center;
-    padding: 20px;
+    padding: 5px;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .grid-container {
@@ -38,6 +44,5 @@ h1 {
     font-size: 12px;
 }
 
-input[type=text] {
-
+input[type=button] {
 }
