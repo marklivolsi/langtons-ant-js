@@ -7,6 +7,7 @@ let cancelTime;
 let pause;
 
 // TODO: Allow user to specify starting orientation
+// TODO: Add step counter
 
 let ant = {
     currentOrientation: undefined,
