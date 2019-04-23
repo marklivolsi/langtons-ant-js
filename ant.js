@@ -2,6 +2,7 @@ const orientations = ["↑", "→", "↓", "←"];
 const white = "rgb(255, 255, 255)";
 const black = "rgb(0, 0, 0)";
 let rows;
+let cancelTime;
 
 // TODO: Allow user to specify starting orientation, delay interval,
 
@@ -27,7 +28,6 @@ let ant = {
 
     move: function() {
         const currentColor = getComputedStyle(document.getElementById(this.currentPosition.toString())).backgroundColor;
-        // this.currentOrientation = changeOrientation(this.currentOrientation, currentColor);
         setArrow(this.currentPosition, this.prevPosition, this.currentOrientation, currentColor);
         this.currentOrientation = changeOrientation(this.currentOrientation, currentColor);
         this.prevPosition = this.currentPosition;
@@ -37,17 +37,13 @@ let ant = {
     }
 };
 
-//  Generate the grid and run the main animation loop
-async function genGrid() {
+//  Generate the grid
+function genGrid(n) {
     const gridContainer = document.getElementById("grid-container");
-    const n = parseInt(document.getElementById("grid-size").value);
-    rows = n;
-
     //  Clears existing grid
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild);
     }
-
     //  Create new grid based on specified grid size
     for (let i = 0; i < n*n; i++) {
         let gridCell = document.createElement("div");
@@ -56,15 +52,21 @@ async function genGrid() {
         gridCell.style.width = `${100/n}%`;
         gridCell.style.height = `${100/n}%`;
         gridContainer.appendChild(gridCell);
-        }
-    ant.initialize(n);
+    }
+}
 
-    //  Main loop
-    while (ant.currentPosition > 0 && ant.currentPosition < n*n) {
+//  Main loop
+async function run() {
+    rows = parseInt(document.getElementById("grid-size").value);
+    genGrid(rows);
+    ant.initialize(rows);
+    if (cancelTime) await sleep(cancelTime);  // run out the remaining sleep time when re-generating the simulation
+    while (ant.currentPosition > 0 && ant.currentPosition < rows*rows) {
         ant.move();
         const currentColor = getComputedStyle(document.getElementById(ant.currentPosition.toString())).backgroundColor;
         console.log(`Taking step #${ant.steps}. Current color: ${currentColor}, orientation: ${ant.currentOrientation}, position: ${ant.currentPosition}`);
         await sleep(1000);
+        cancelTime = new Date().getTime();
     }
 }
 
