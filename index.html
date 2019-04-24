@@ -15,6 +15,15 @@
         <br>
         <label for="delay-time">Delay time (ms):</label>
         <input type="text" id="delay-time" placeholder="Enter delay time in ms (i.e. 1000 = 1 sec)" value="1000">
+        <br>
+        <div id="orientation-select">
+            <label>Orientation: </label>
+            <input type="radio" name="orientation" value="↑" checked="checked"> ↑
+            <input type="radio" name="orientation" value="↓"> ↓
+            <input type="radio" name="orientation" value="←"> ←
+            <input type="radio" name="orientation" value="→"> →
+        </div>
+
     </form>
     <div class="run-btn"><input type="button" onclick="run()" value="New simulation"></div>
     <div class="stop-btn"><input type="button" id="pause-btn" onclick="pauseSim()" value="Pause simulation"></div>

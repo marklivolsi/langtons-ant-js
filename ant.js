@@ -23,7 +23,7 @@ let ant = {
         } else {
             this.startPosition = Math.floor((n * n) / 2);
         }
-        this.currentOrientation = "↑";
+        this.currentOrientation = getOrientation();
         this.currentPosition = this.startPosition;
         this.prevPosition = this.startPosition;
         this.steps = 0;
@@ -94,6 +94,14 @@ function resumeSim() {
 function setPauseBtn() {
     document.getElementById("pause-btn").value = "Pause simulation";
     document.getElementById("pause-btn").onclick = pauseSim;
+}
+
+// For setting the initial orientation of a new simulation
+function getOrientation() {
+    const radioBtns = document.getElementById("orientation-select").getElementsByTagName("input");
+    for (let btn of radioBtns) {
+        if (btn.checked) return btn.value;
+    }
 }
 
 //  Switch the background color of a cell from white > black and vice versa
