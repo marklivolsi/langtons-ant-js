@@ -11,10 +11,10 @@
 <div class="btns">
     <form>
         <label for="grid-size">Grid size:</label>
-        <input type="text" id="grid-size" placeholder="Enter grid size (i.e. 20)" />
+        <input type="text" id="grid-size" placeholder="Enter grid size (i.e. 25)" value="25"/>
         <br>
         <label for="delay-time">Delay time (ms):</label>
-        <input type="text" id="delay-time" placeholder="Enter delay time in ms (i.e. 1000 = 1 sec)" value="1000">
+        <input type="text" id="delay-time" placeholder="Enter delay time in ms (i.e. 1000 = 1 sec)" value="400">
         <br>
         <div id="orientation-select">
             <label>Orientation: </label>
@@ -27,11 +27,10 @@
     </form>
     <div class="run-btn"><input type="button" onclick="run()" value="New simulation"></div>
     <div class="stop-btn"><input type="button" id="pause-btn" onclick="pauseSim()" value="Pause simulation"></div>
+    <div id="steps"></div>
 </div>
 
 <div class="grid-container" id="grid-container"></div>
-
-
 </body>
 <script src="./ant.js"></script>
 </html>

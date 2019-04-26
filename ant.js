@@ -6,7 +6,6 @@ let delayTime;
 let cancelTime;
 let pause;
 
-// TODO: Allow user to specify starting orientation
 // TODO: Add step counter
 
 let ant = {
@@ -75,6 +74,7 @@ async function run(newSim=true) {
     }
     while (ant.currentPosition > 0 && ant.currentPosition < rows*rows && !pause) {
         ant.move();
+        setSteps(ant.steps);
         await sleep(delayTime);
         cancelTime = new Date().getTime();
     }
@@ -114,7 +114,7 @@ function switchColor(currentPosition, currentColor) {
     }
 }
 
-//  Sets the arrow icon indicating direction of next move
+//  Sets the arrow icon indicating the orientation
 function setArrow(currentPosition, prevPosition, currentOrientation, currentColor) {
     document.getElementById(currentPosition.toString()).innerText = currentOrientation;
     if (currentColor === white) {
@@ -168,4 +168,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
+function setSteps(steps) {
+    const s = steps.toLocaleString();
+    document.getElementById("steps").innerText = `Steps: ${s}`;
+}

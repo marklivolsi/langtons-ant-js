@@ -32,6 +32,7 @@ h1 {
     height: 600px;
     display: flex;
     flex-wrap: wrap;
+    clear: left;
 }
 
 .grid-cell {
@@ -42,4 +43,17 @@ h1 {
     justify-content: center;
     align-items: center;
     font-size: 12px;
+}
+
+.stop-btn {
+    width: 100%;
+}
+
+#steps {
+    width: 600px;
+    text-align: right;
+    /*border: 1px solid red;*/
+    /*position: relative;*/
+    /*left: 200px;*/
+    /*text-align: right;*/
 }
